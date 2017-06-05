@@ -1,7 +1,7 @@
 package com.jeweleryguard.controller;
 
-import javax.validation.Valid;
-
+import com.jeweleryguard.model.User;
+import com.jeweleryguard.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jeweleryguard.model.User;
-import com.jeweleryguard.service.UserService;
+import javax.validation.Valid;
 
 @Controller
 public class LoginController {
@@ -44,13 +43,13 @@ public class LoginController {
 		if (userExists != null) {
 			bindingResult
 					.rejectValue("email", "error.user",
-							"There is already a user registered with the email provided");
+							"Istnieje konto z takim adresem email");
 		}
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("registration");
 		} else {
 			userService.saveUser(user);
-			modelAndView.addObject("successMessage", "User has been registered successfully");
+			modelAndView.addObject("successMessage", "Stworzono nowego uzytkownika.");
 			modelAndView.addObject("user", new User());
 			modelAndView.setViewName("registration");
 
@@ -63,8 +62,9 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
-		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
+
+		modelAndView.addObject("userName", "Witaj " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ") + Liczba bizuterii: "+user.getJewelryList().size());
+		modelAndView.addObject("adminMessage","Zawartosc widoczna wylacznie dla zalogowanych uzytkownikow");
 		modelAndView.setViewName("admin/home");
 		return modelAndView;
 	}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Strona admina</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="container">
+
+		<div class="panel-group" style="margin-top:40px">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<span th:utext="${userName}"></span>
+				</div>
+				<h1>Moja biżuteria</h1>
+				<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<th>L.P.</th>
+							<th>Nazwa</th>
+							<th>Kruszec</th>
+							<th>Waga</th>
+							<th>Firma</th>
+						</tr>
+						<tr th:each="j,iterationStatus  : ${jewelry}">
+							<td th:text="${iterationStatus.count}">1</td>
+							<td th:text="${j.name}">NAME</td>
+							<td th:text="${j.metal}">METAL</td>
+							<td th:text="${j.weight}">WEIGHT</td>
+							<td th:text="${j.brand}">BRAND</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<a href="/admin/home" class="btn btn-md btn-info btn-block" role="button">Home</a>
+		<a href="/jewelry/new" class="btn btn-md btn-info btn-block" role="button">Dodaj nową</a>
+		<form th:action="@{/logout}" method="get">
+			<button class="btn btn-md btn-danger btn-block" name="registration"
+					type="Submit">Wyloguj</button>
+		</form>
+
+	</div>
+</body>
+</html>

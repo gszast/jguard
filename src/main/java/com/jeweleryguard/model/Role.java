@@ -16,7 +16,7 @@ public class Role {
 	private int id;
 	@Column(name="role")
 	private String role;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -29,6 +29,6 @@ public class Role {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
-	
+
+
 }
